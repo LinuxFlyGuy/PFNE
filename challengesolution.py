@@ -19,14 +19,14 @@ class NetworkDevice(object):
         self.username = username
         self.password = password
         try:
-            self.remote_conn = telnetlib.Telnet(ip, TELNET_PORT, TELNET_TIMEOUT)
+            self.remote_conn = telnetlib.Telnet(self.ip, TELNET_PORT, TELNET_TIMEOUT)
         except socket.timeout:
             sys.exit("Connection timed-out")
     def login(self):
         output = self.remote_conn.read_until("sername:", TELNET_TIMEOUT)
-        self.remote_conn.write(username + '\n')
+        self.remote_conn.write(self.username + '\n')
         output += self.remote_conn.read_until("ssword:", TELNET_TIMEOUT)
-        self.remote_conn.write(password + '\n')
+        self.remote_conn.write(self.password + '\n')
         return output
     def send_command(self, cmd):
         cmd = cmd.rstrip()
@@ -45,7 +45,7 @@ def main():
     rtr1 = NetworkDevice(ip_addr, username, password)
     output = rtr1.login()
     time.sleep(1)
-    rtr1.read_very_eager()
+    rtr1.remote_conn.read_very_eager()
     output = rtr1.send_command('terminal length 0')
     output = rtr1.send_command('show ip int brief')
     print "\n\n"
