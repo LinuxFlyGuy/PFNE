@@ -18,7 +18,7 @@ oids = (
 	('ifOutOctets_fa4', '1.3.6.1.2.1.2.2.1.16.5'),
 	('ifOutUcastPkts_fa4', '1.3.6.1.2.1.2.2.1.17.5')
 )
-duration = 12
+duration = 13
 title = ''
 interface = ''
 ino = [0]
@@ -42,28 +42,32 @@ if __name__ == '__main__':
 			if 'ifDescr' in n:
 				interface = datapoint
 			if 'InOctets' in n:
-				ino.append(int(datapoint) - ino[-1])
+				diff = int(datapoint) - ino[-1]
+				ino.append(diff)
 			if 'InUcast' in n:
-				inu.append(int(datapoint) - inu[-1])
+				diff = int(datapoint) - inu[-1]
+				inu.append(diff)
 			if 'OutOctets' in n:
-				outo.append(int(datapoint) - outo[-1])
+				diff = int(datapoint) - outo[-1]
+				outo.append(diff)
 			if 'OutUcast' in n:
-				outu.append(int(datapoint) - outu[-1])
+				diff = int(datapoint) - outu[-1]
+				outu.append(diff)
 		time.sleep(300)
-		duration -= 1
+                duration -= 1
 
 	#Generate input/output octets line chart
 	chartoctets = pygal.Line()
 	chartoctets.title = title + interface + 'Octets'
 	chartoctets.x_labels = ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
-	chartoctets.add('InOctets', ino)
-	chartoctets.add('OutOctets', outo)
+	chartoctets.add('InOctets', ino[1:13])
+	chartoctets.add('OutOctets', outo[1:13])
 	chartoctets.render_to_file('octets.svg')
 
 	#Generate input/output unicast packets line chart
 	chartunicast = pygal.Line()
 	chartunicast.title = title + interface + 'Unicast Packets'
 	chartunicast.x_labels = ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
-	chartunicast.add('InUcastPkts', inu)
-	chartunicast.add('OutUcastPkts', outu)
+	chartunicast.add('InUcastPkts', inu[1:13])
+	chartunicast.add('OutUcastPkts', outu[1:13])
 	chartunicast.render_to_file('unicast.svg')
