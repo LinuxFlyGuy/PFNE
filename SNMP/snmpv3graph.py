@@ -62,7 +62,7 @@ if __name__ == '__main__':
 
 	#Generate input/output octets line chart
 	chartoctets = pygal.Line()
-	chartoctets.title = title + interface + '\s Octets'
+	chartoctets.title = title + interface + ' Octets'
 	chartoctets.x_labels = ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
 	chartoctets.add('InOctets', in_octets_diff[1:13])
 	chartoctets.add('OutOctets', out_octets_diff[1:13])
@@ -70,7 +70,7 @@ if __name__ == '__main__':
 
 	#Generate input/output unicast packets line chart
 	chartunicast = pygal.Line()
-	chartunicast.title = title + interface + '\s Unicast Packets'
+	chartunicast.title = title + interface + ' Unicast Packets'
 	chartunicast.x_labels = ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
 	chartunicast.add('InUcastPkts', in_unicasts_diff[1:13])
 	chartunicast.add('OutUcastPkts', out_unicasts_diff[1:13])
