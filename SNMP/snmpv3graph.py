@@ -21,10 +21,14 @@ oids = (
 duration = 13
 title = ''
 interface = ''
-ino = [0]
-inu = [0]
-outo = [0]
-outu = [0]
+in_octets_prior_value = 0
+in_octets_diff = list()
+in_unicasts_prior_value = 0
+in_unicasts_diff = list()
+out_octets_prior_value = 0
+out_octets_diff = list()
+out_unicasts_prior_value = 0
+out_unicasts_diff = list()
 
 #Function to retrieve SNMPv3 data at an OID
 def retrieveoidv3(rtr, user, oid, proto):
@@ -42,32 +46,32 @@ if __name__ == '__main__':
 			if 'ifDescr' in n:
 				interface = datapoint
 			if 'InOctets' in n:
-				diff = int(datapoint) - ino[-1]
-				ino.append(diff)
+				in_octets_diff.append(int(datapoint) - in_octets_prior_value)
+				in_octets_prior_value = int(datapoint)
 			if 'InUcast' in n:
-				diff = int(datapoint) - inu[-1]
-				inu.append(diff)
+				in_unicasts_diff.append(int(datapoint) - in_unicasts_prior_value)
+				in_unicasts_prior_value = int(datapoint)
 			if 'OutOctets' in n:
-				diff = int(datapoint) - outo[-1]
-				outo.append(diff)
+				out_octets_diff.append(int(datapoint) - out_octets_prior_value)
+				out_octets_prior_value = int(datapoint)
 			if 'OutUcast' in n:
-				diff = int(datapoint) - outu[-1]
-				outu.append(diff)
+				out_unicasts_diff.append(int(datapoint) - out_unicasts_prior_value)
+				out_unicasts_prior_value = int(datapoint)
 		time.sleep(300)
                 duration -= 1
 
 	#Generate input/output octets line chart
 	chartoctets = pygal.Line()
-	chartoctets.title = title + interface + 'Octets'
+	chartoctets.title = title + interface + '\s Octets'
 	chartoctets.x_labels = ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
-	chartoctets.add('InOctets', ino[1:13])
-	chartoctets.add('OutOctets', outo[1:13])
+	chartoctets.add('InOctets', in_octets_diff[1:13])
+	chartoctets.add('OutOctets', out_octets_diff[1:13])
 	chartoctets.render_to_file('octets.svg')
 
 	#Generate input/output unicast packets line chart
 	chartunicast = pygal.Line()
-	chartunicast.title = title + interface + 'Unicast Packets'
+	chartunicast.title = title + interface + '\s Unicast Packets'
 	chartunicast.x_labels = ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55', '60']
-	chartunicast.add('InUcastPkts', inu[1:13])
-	chartunicast.add('OutUcastPkts', outu[1:13])
+	chartunicast.add('InUcastPkts', in_unicasts_diff[1:13])
+	chartunicast.add('OutUcastPkts', out_unicasts_diff[1:13])
 	chartunicast.render_to_file('unicast.svg')
