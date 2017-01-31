@@ -1,10 +1,3 @@
-(dp0
-S'ccmHistoryRunningLastChanged'
-p1
-S'1791000005'
-p2
-sS'sysUptime'
-p3
-S'1791066247'
-p4
-s.
+S'1788599290'
+p0
+.

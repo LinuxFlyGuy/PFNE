@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
-import smtplib, time, pickle, json, yaml
-from email.mime.text import MIMEText
+import time, pickle, json, yaml, email_helper
 from snmp_helper import snmp_get_oid_v3, snmp_extract
 
 user = 'pysnmp'
@@ -17,26 +16,13 @@ oids = (
 	('ccmHistoryRunningLastSaved', '1.3.6.1.4.1.9.9.43.1.1.2.0'),
 	('ccmHistoryStartupLastChanged', '1.3.6.1.4.1.9.9.43.1.1.3.0')
 )
-to = 'vagrant83@gmail.com'
-subject = 'Configuration Change Detected'
-sender = 'python@script.net'
 #Function to retrieve SNMPv3 data at an OID
 def retrieveoidv3(rtr, user, oid, proto):
 	r = snmp_get_oid_v3(rtr, user, oid, proto)
 	info = snmp_extract(r)
 	return info
 
-#Function to send email
-def send_mail(receipient, subject, message, sender):
-	subject = MIMEText(message)
-	message['Subject'] = subject
-	message['From'] = sender
-	message['To'] = recipient
-	smtp_conn = smtplib.SMTP('localhost')
-	smtp_conn.sendmail(sender, recipient, message.as_string())
-	smtp_conn.quit()
-	return True
-
+#Function to write initial files as baseline
 def write_files(choice):
 	for n, oid in oids:
 		data = retrieveoidv3(rtr2, snmp_user, oid, auth_proto)
@@ -54,7 +40,7 @@ def write_files(choice):
 			print "Something went horribly wrong"
 			exit()
 
-
+#Function to compare current router data to baseline file data
 def compare_data(choice):
 	for n, oid in oids:
 		data = retrieveoidv3(rtr2, snmp_user, oid, auth_proto)
@@ -63,8 +49,16 @@ def compare_data(choice):
 			a = pickle.load(f)
 			if data != a:
 				time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
-				message = "A configuration change was detected at", time
-				send_mail(to, subject, message, sender)
+				to = 'vagrant83@gmail.com'
+				subject = 'Configuration change detected'
+				message = ''' 
+					A configuration change was detected at
+					
+					Regards,
+					Myself
+					'''
+				sender = 'vagrant83@gmail.com'
+				email_helper.send_mail(to, subject, message, sender)
 		elif choice == 2:
 			with open('configchange.json') as f:
 				a = json.loads(f)
