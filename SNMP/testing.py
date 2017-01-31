@@ -27,14 +27,14 @@ def write_files(choice):
 	for n, oid in oids:
 		data = retrieveoidv3(rtr2, snmp_user, oid, auth_proto)
 		if choice == 1:
-			f = open('configchange.pkl', "wb")
+			f = open(n + '.pkl', "wb")
 			pickle.dump(data, f)
 			f.close()
 		elif choice == 2:
-			with open('configchange.json', "w") as f:
+			with open(n + '.json', "w") as f:
 				json.dump(data, f)
 		elif choice == 3:
-			with open('configchange.yml', "w") as f:
+			with open(n + '.yml', "w") as f:
 				yaml.dump(data, f)
 		else:
 			print "Something went horribly wrong"
@@ -45,26 +45,35 @@ def compare_data(choice):
 	for n, oid in oids:
 		data = retrieveoidv3(rtr2, snmp_user, oid, auth_proto)
 		if choice == 1:
-			f = open('configchange.pkl', "rb")
+			f = open(n + '.pkl', "rb")
 			a = pickle.load(f)
             print "Here is the current router data"
             print data
             print "Here is the baseline file"
             print a
+            timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+            time = str(timestamp[0] + timestamp[1])
+            print time
 		elif choice == 2:
-			with open('configchange.json') as f:
+			with open(n + '.json') as f:
 				a = json.loads(f)
             print "Here is the current router data"
             print data
             print "Here is the baseline file"
             print a
+            timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+            time = str(timestamp[0] + timestamp[1])
+            print time
 		elif choice == 3:
-			with open('configchange.yml') as f:
+			with open(n + '.yml') as f:
 				a = yaml.loads(f)
             print "Here is the current router data"
             print data
             print "Here is the baseline file"
             print a
+            timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+            time = str(timestamp[0] + timestamp[1])
+            print time
 		else:
 			print "Something went horribly wrong"
 			exit()

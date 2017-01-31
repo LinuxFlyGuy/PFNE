@@ -27,14 +27,14 @@ def write_files(choice):
 	for n, oid in oids:
 		data = retrieveoidv3(rtr2, snmp_user, oid, auth_proto)
 		if choice == 1:
-			f = open('configchange.pkl', "wb")
+			f = open(n + '.pkl', "wb")
 			pickle.dump(data, f)
 			f.close()
 		elif choice == 2:
-			with open('configchange.json', "w") as f:
+			with open(n + '.json', "w") as f:
 				json.dump(data, f)
 		elif choice == 3:
-			with open('configchange.yml', "w") as f:
+			with open(n + '.yml', "w") as f:
 				yaml.dump(data, f)
 		else:
 			print "Something went horribly wrong"
@@ -45,10 +45,11 @@ def compare_data(choice):
 	for n, oid in oids:
 		data = retrieveoidv3(rtr2, snmp_user, oid, auth_proto)
 		if choice == 1:
-			f = open('configchange.pkl', "rb")
+			f = open(n + '.pkl', "rb")
 			a = pickle.load(f)
 			if data != a:
-				time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+				timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+				time = str(timestamp[0] + timestamp[1])
 				to = 'vagrant83@gmail.com'
 				subject = 'Configuration change detected'
 				message = '''
@@ -59,8 +60,9 @@ def compare_data(choice):
 					'''
 				sender = 'vagrant83@gmail.com'
 				email_helper.send_mail(to, subject, message, sender)
+				write_files(choice)
 		elif choice == 2:
-			with open('configchange.json') as f:
+			with open(n + '.json') as f:
 				a = json.loads(f)
 			if data != a:
 				time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
@@ -74,8 +76,9 @@ def compare_data(choice):
 					'''
 				sender = 'vagrant83@gmail.com'
 				email_helper.send_mail(to, subject, message, sender)
+				write_files(choice)
 		elif choice == 3:
-			with open('configchange.yml') as f:
+			with open(n + '.yml') as f:
 				a = yaml.loads(f)
 			if data != a:
 				time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
@@ -89,6 +92,7 @@ def compare_data(choice):
 					'''
 				sender = 'vagrant83@gmail.com'
 				email_helper.send_mail(to, subject, message, sender)
+				write_files(choice)
 		else:
 			print "Something went horribly wrong"
 			exit()
