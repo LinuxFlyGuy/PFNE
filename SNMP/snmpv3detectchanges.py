@@ -42,43 +42,41 @@ if __name__ == '__main__':
 	2 - JSON
 	3 - YAML \n'''
 	option = raw_input("Enter the number of your selection: ")
+	if int(option) >=1 and int(option) <=3:
+		choice = int(option)
+	else:
+		print "That is not a valid choice; defaulting to Pickle"
+		choice = 1
 	while True:
-	for n, oid in oids:
-		data = retrieveoidv3(rtr2, snmp_user, oid, auth_proto)
-		if data > 0:
-			changes[n] = data
-			time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
-			changes['sysUptime'] = time
-			if int(option) == 1:
+		for n, oid in oids:
+			data = retrieveoidv3(rtr2, snmp_user, oid, auth_proto)
+			if choice == 1:
 				f = open('configchange.pkl', "wb")
 				pickle.dump(changes, f)
 				f.close()
-			elif int(option) == 2:
+			elif choice == 2:
 				with open('configchange.json', "w") as f:
 					json.dump(changes, f)
-			elif int(option) == 3:
+			elif choice == 3:
 				with open('configchange.yml', "w") as f:
 					f.write(yaml.dump(changes, default_flow_style=False))
 			else:
-				print "That is not a valid selection; defaulting to Pickle"
-				option = '1'
-				f = open('configchange.pkl', 'wb')
-				pickle.dump(changes, f)
-				f.close()
-			to = 'vagrant83@gmail.com'
-			subject = 'Configuration Change Detected'
+				print "Something went horribly wrong"
 			if int(option) == 1:
 				f = open('configchange.pkl', "rb")
 				a = pickle.load(f)
-				message = 'A change to the configuration has been made' + a + ' regards, myself'
 			elif int(option) == 2:
 				with open('configchange.json', "r") as f:
-					a = json.load(f)
-					message = 'A change to the configuration has been made' + a + ' regards, myself'
-			else int(option) == 3:
+					a = json.loads(f)
+			elif int(option) == 3:
 				with open('configchange.yml') as f:
-					a = yaml.load(f)
-					message = 'A change to the configuration has been made' + a + ' regards, myself'
-			sender = 'python@script.net'
-			send_mail(to, subject, message, sender)
+					a = yaml.loads(f)
+				else:
+					print "Something went horribly wrong"
+			if data != a:
+		to = 'vagrant83@gmail.com'
+		subject = 'Configuration Change Detected'
+		sender = 'python@script.net'
+		time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+		send_mail(to, subject, message, sender)
 		time.sleep(60)
