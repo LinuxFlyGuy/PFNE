@@ -49,15 +49,14 @@ def compare_data(choice):
 			a = pickle.load(f)
 			if data != a:
 				timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
-				time = str(timestamp[0] + timestamp[1])
 				to = 'vagrant83@gmail.com'
 				subject = 'Configuration change detected'
 				message = '''
-					A configuration change was detected at
+					A configuration change was detected at %s
 
 					Regards,
 					Myself
-					'''
+					''' % timestamp
 				sender = 'vagrant83@gmail.com'
 				email_helper.send_mail(to, subject, message, sender)
 				write_files(choice)
@@ -65,15 +64,15 @@ def compare_data(choice):
 			with open(n + '.json') as f:
 				a = json.loads(f)
 			if data != a:
-				time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+				timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
 				to = 'vagrant83@gmail.com'
 				subject = 'Configuration change detected'
 				message = '''
-					A configuration change was detected at
+					A configuration change was detected at %s
 
 					Regards,
 					Myself
-					'''
+					''' % timestamp
 				sender = 'vagrant83@gmail.com'
 				email_helper.send_mail(to, subject, message, sender)
 				write_files(choice)
@@ -81,15 +80,15 @@ def compare_data(choice):
 			with open(n + '.yml') as f:
 				a = yaml.loads(f)
 			if data != a:
-				time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+				timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
 				to = 'vagrant83@gmail.com'
 				subject = 'Configuration change detected'
 				message = '''
-					A configuration change was detected at
+					A configuration change was detected at %s
 
 					Regards,
 					Myself
-					'''
+					''' % timestamp
 				sender = 'vagrant83@gmail.com'
 				email_helper.send_mail(to, subject, message, sender)
 				write_files(choice)
