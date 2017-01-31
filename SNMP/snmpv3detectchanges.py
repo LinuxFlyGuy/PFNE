@@ -51,9 +51,9 @@ def compare_data(choice):
 				time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
 				to = 'vagrant83@gmail.com'
 				subject = 'Configuration change detected'
-				message = ''' 
+				message = '''
 					A configuration change was detected at
-					
+
 					Regards,
 					Myself
 					'''
@@ -64,15 +64,31 @@ def compare_data(choice):
 				a = json.loads(f)
 			if data != a:
 				time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
-				message = "A configuration change was detected at", time
-				send_mail(to, subject, message, sender)
+				to = 'vagrant83@gmail.com'
+				subject = 'Configuration change detected'
+				message = '''
+					A configuration change was detected at
+
+					Regards,
+					Myself
+					'''
+				sender = 'vagrant83@gmail.com'
+				email_helper.send_mail(to, subject, message, sender)
 		elif choice == 3:
 			with open('configchange.yml') as f:
 				a = yaml.loads(f)
 			if data != a:
 				time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
-				message = "A configuration change was detected at", time
-				send_mail(to, subject, message, sender)
+				to = 'vagrant83@gmail.com'
+				subject = 'Configuration change detected'
+				message = '''
+					A configuration change was detected at
+
+					Regards,
+					Myself
+					'''
+				sender = 'vagrant83@gmail.com'
+				email_helper.send_mail(to, subject, message, sender)
 		else:
 			print "Something went horribly wrong"
 			exit()
