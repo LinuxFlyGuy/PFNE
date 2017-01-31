@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-import smtplib
+import smtplib, time, pickle, json, yaml
+from email.mime.text import MIMEText
 from snmp_helper import snmp_get_oid_v3, snmp_extract
 
 user = 'pysnmp'
@@ -8,23 +9,76 @@ auth_key = 'galileo1'
 auth_proto = 'sha'
 enc_key = 'galileo1'
 port = 161
-rtr1 = ('184.105.247.70', port)
 rtr2 = ('184.105.247.71', port)
 snmp_user = (user, auth_key, enc_key)
-sysname = '1.3.6.1.2.1.1.5.0'
-sysdescr = '1.3.6.1.2.1.1.1.0'
-email = 'vagrant83@gmail.com'
-subject = 'Changes Detected'
-message = 'Add message'
-
+sysUptime = '1.3.6.1.2.1.1.3.0'
+oids = (
+	('ccmHistoryRunningLastChanged', '1.3.6.1.4.1.9.9.43.1.1.1.0'),
+	('ccmHistoryRunningLastSaved', '1.3.6.1.4.1.9.9.43.1.1.2.0'),
+	('ccmHistoryStartupLastChanged', '1.3.6.1.4.1.9.9.43.1.1.3.0')
+)
+changes = {}
 #Function to retrieve SNMPv3 data at an OID
 def retrieveoidv3(rtr, user, oid, proto):
 	r = snmp_get_oid_v3(rtr, user, oid, proto)
 	info = snmp_extract(r)
-	print info + '\n'
+	return info
 
-#Execute this is script is run directly
+#Function to send email
+def send_mail(receipient, subject, message, sender):
+	subject = MIMEText(message)
+	message['Subject'] = subject
+	message['From'] = sender
+	message['To'] = recipient
+	smtp_conn = smtplib.SMTP('localhost')
+	smtp_conn.sendmail(sender, recipient, message.as_string())
+	smtp_conn.quit()
+	return True
+
+#Execute this if script is run directly
 if __name__ == '__main__':
-	retrieveoidv3(rtr1, snmp_user, sysname, auth_proto)
-	retrieveoidv3(rtr2, snmp_user, sysname, auth_proto)
-
+	print '''Save data in which format?
+	1 - Pickle
+	2 - JSON
+	3 - YAML \n'''
+	option = raw_input("Enter the number of your selection: ")
+	while True:
+	for n, oid in oids:
+		data = retrieveoidv3(rtr2, snmp_user, oid, auth_proto)
+		if data > 0:
+			changes[n] = data
+			time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+			changes['sysUptime'] = time
+			if int(option) == 1:
+				f = open('configchange.pkl', "wb")
+				pickle.dump(changes, f)
+				f.close()
+			elif int(option) == 2:
+				with open('configchange.json', "w") as f:
+					json.dump(changes, f)
+			elif int(option) == 3:
+				with open('configchange.yml', "w") as f:
+					f.write(yaml.dump(changes, default_flow_style=False))
+			else:
+				print "That is not a valid selection; defaulting to Pickle"
+				option = '1'
+				f = open('configchange.pkl', 'wb')
+				pickle.dump(changes, f)
+				f.close()
+			to = 'vagrant83@gmail.com'
+			subject = 'Configuration Change Detected'
+			if int(option) == 1:
+				f = open('configchange.pkl', "rb")
+				a = pickle.load(f)
+				message = 'A change to the configuration has been made' + a + ' regards, myself'
+			elif int(option) == 2:
+				with open('configchange.json', "r") as f:
+					a = json.load(f)
+					message = 'A change to the configuration has been made' + a + ' regards, myself'
+			else int(option) == 3:
+				with open('configchange.yml') as f:
+					a = yaml.load(f)
+					message = 'A change to the configuration has been made' + a + ' regards, myself'
+			sender = 'python@script.net'
+			send_mail(to, subject, message, sender)
+		time.sleep(60)
