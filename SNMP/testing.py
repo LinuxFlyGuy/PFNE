@@ -47,33 +47,35 @@ def compare_data(choice):
 		if choice == 1:
 			f = open(n + '.pkl', "rb")
 			a = pickle.load(f)
-            print "Here is the current router data"
-            print data
-            print "Here is the baseline file"
-            print a
-            timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
-            time = str(timestamp[0] + timestamp[1])
-            print time
+            		print "Here is the current router data"
+            		print data
+            		print "Here is the baseline file"
+            		print a
+            		timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+			print timestamp
 		elif choice == 2:
 			with open(n + '.json') as f:
 				a = json.loads(f)
-            print "Here is the current router data"
-            print data
-            print "Here is the baseline file"
-            print a
-            timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
-            time = str(timestamp[0] + timestamp[1])
-            print time
+            		print "Here is the current router data"
+            		print data
+            		print "Here is the baseline file"
+            		print a
+            		timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+			print "Here is the retrieved timestamp"
+			print timestamp
+            		time = str(timestamp[0] + timestamp[1])
+			print "Here is the time string"
+            		print time
 		elif choice == 3:
 			with open(n + '.yml') as f:
 				a = yaml.loads(f)
-            print "Here is the current router data"
-            print data
-            print "Here is the baseline file"
-            print a
-            timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
-            time = str(timestamp[0] + timestamp[1])
-            print time
+            		print "Here is the current router data"
+            		print data
+            		print "Here is the baseline file"
+            		print a
+            		timestamp = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+            		time = str(timestamp[0] + timestamp[1])
+            		print time
 		else:
 			print "Something went horribly wrong"
 			exit()
