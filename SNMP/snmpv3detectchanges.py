@@ -17,7 +17,9 @@ oids = (
 	('ccmHistoryRunningLastSaved', '1.3.6.1.4.1.9.9.43.1.1.2.0'),
 	('ccmHistoryStartupLastChanged', '1.3.6.1.4.1.9.9.43.1.1.3.0')
 )
-changes = {}
+to = 'vagrant83@gmail.com'
+subject = 'Configuration Change Detected'
+sender = 'python@script.net'
 #Function to retrieve SNMPv3 data at an OID
 def retrieveoidv3(rtr, user, oid, proto):
 	r = snmp_get_oid_v3(rtr, user, oid, proto)
@@ -50,33 +52,27 @@ if __name__ == '__main__':
 	while True:
 		for n, oid in oids:
 			data = retrieveoidv3(rtr2, snmp_user, oid, auth_proto)
-			if choice == 1:
-				f = open('configchange.pkl', "wb")
-				pickle.dump(changes, f)
-				f.close()
-			elif choice == 2:
-				with open('configchange.json', "w") as f:
-					json.dump(changes, f)
-			elif choice == 3:
-				with open('configchange.yml', "w") as f:
-					f.write(yaml.dump(changes, default_flow_style=False))
-			else:
-				print "Something went horribly wrong"
 			if int(option) == 1:
 				f = open('configchange.pkl', "rb")
 				a = pickle.load(f)
+				if data != a:
+					time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+					message = "A configuration change was detected at", time
+					send_mail(to, subject, message, sender)
 			elif int(option) == 2:
 				with open('configchange.json', "r") as f:
 					a = json.loads(f)
+				if data != a:
+					time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+					message = "A configuration change was detected at", time
+					send_mail(to, subject, message, sender)
 			elif int(option) == 3:
 				with open('configchange.yml') as f:
 					a = yaml.loads(f)
-				else:
-					print "Something went horribly wrong"
-			if data != a:
-		to = 'vagrant83@gmail.com'
-		subject = 'Configuration Change Detected'
-		sender = 'python@script.net'
-		time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
-		send_mail(to, subject, message, sender)
+				if data != a:
+					time = retrieveoidv3(rtr2, snmp_user, sysUptime, auth_proto)
+					message = "A configuration change was detected at", time
+					send_mail(to, subject, message, sender)
+			else:
+				print "Something went horribly wrong"
 		time.sleep(60)
