@@ -19,10 +19,7 @@ if __name__ == '__main__':
     remote_conn.send('show version\n')
     outp = remote_conn.recv(5000)
     print outp
-    outp = remote_conn.recv(5000)
-    print outp
-    outp = remote_conn.recv(5000)
-    print outp
+    remote_conn.send('\n')
     remote_conn.send('enable\n')
     outp = remote_conn.recv(5000)
     print outp
@@ -38,7 +35,6 @@ if __name__ == '__main__':
     remote_conn.send('show logging\n')
     outp = remote_conn.recv(5000)
     print outp
-    outp = remote_conn.recv(5000)
-    print outp
+    remote_conn.send('\n')
     outp = remote_conn.recv(5000)
     print outp
