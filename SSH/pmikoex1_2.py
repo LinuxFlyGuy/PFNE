@@ -12,8 +12,8 @@ def sshinteract(cmd):
     remote_conn.send(cmd + '\n')
     time.sleep(3)
     outp = remote_conn.recv(5000)
-    return outp
-
+    print outp
+    
 if __name__ == '__main__':
     remote_conn_pre = paramiko.SSHClient()
     #remote_conn_pre.load_system_host_keys()
