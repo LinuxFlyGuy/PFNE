@@ -11,7 +11,7 @@ port = 22
 def sshinteract(cmd):
     remote_conn.send(cmd + '\n')
     time.sleep(5)
-    outp = remote_conn.recv(5000)
+    outp = remote_conn.recv(15000)
     print outp
 
 if __name__ == '__main__':
