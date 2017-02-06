@@ -21,6 +21,8 @@ if __name__ == '__main__':
     print outp
     outp = remote_conn.recv(5000)
     print outp
+    outp = remote_conn.recv(5000)
+    print outp
     remote_conn.send('enable\n')
     outp = remote_conn.recv(5000)
     print outp
