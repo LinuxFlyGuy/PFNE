@@ -24,7 +24,6 @@ if __name__ == '__main__':
     outp = remote_conn.recv(5000)
     print outp
     sshinteract('show version')
-    sshinteract('enable')
     sshinteract('configure terminal')
     sshinteract('logging buffered 9000')
     sshinteract('exit')
