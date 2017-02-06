@@ -23,6 +23,7 @@ if __name__ == '__main__':
     remote_conn.settimeout(8.0)
     outp = remote_conn.recv(5000)
     print outp
+    sshinteract()
     sshinteract('show version')
     sshinteract('configure terminal')
     sshinteract('logging buffered 9000')
