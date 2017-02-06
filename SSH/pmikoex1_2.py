@@ -8,33 +8,26 @@ user = 'pyclass'
 password = '88newclass'
 port = 22
 
+def sshinteract(cmd):
+    remote_conn.send(cmd + '\n')
+    time.sleep(5)
+    outp = remote_conn.recv(15000)
+    print outp
+
 if __name__ == '__main__':
     remote_conn_pre = paramiko.SSHClient()
+    #remote_conn_pre.load_system_host_keys()
     remote_conn_pre.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     remote_conn_pre.connect(ip, username=user, password=password, look_for_keys=False, allow_agent=False, port=port)
     remote_conn = remote_conn_pre.invoke_shell()
     remote_conn.settimeout(8.0)
     outp = remote_conn.recv(5000)
     print outp
-    remote_conn.send('show version\n')
-    outp = remote_conn.recv(5000)
-    print outp
-    remote_conn.send('\n')
-    remote_conn.send('enable\n')
-    outp = remote_conn.recv(5000)
-    print outp
-    remote_conn.send('configure terminal\n')
-    outp = remote_conn.recv(5000)
-    print outp
-    remote_conn.send('logging buffered 9000\n')
-    outp = remote_conn.recv(5000)
-    print outp
-    remote_conn.send('exit\n')
-    outp = remote_conn.recv(5000)
-    print outp
-    remote_conn.send('show logging\n')
-    outp = remote_conn.recv(5000)
-    print outp
-    remote_conn.send('\n')
-    outp = remote_conn.recv(5000)
-    print outp
+    sshinteract('show version')
+    sshinteract('\n')
+    sshinteract('enable')
+    sshinteract('configure terminal')
+    sshinteract('logging buffered 9000')
+    sshinteract('exit')
+    sshinteract('show logging')
+    sshinteract('\n')
