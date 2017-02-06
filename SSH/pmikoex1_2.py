@@ -26,4 +26,6 @@ if __name__ == '__main__':
     sshinteract('show version')
     sshinteract('enable')
     sshinteract('configure terminal')
-    sshinteract('logging buffered 2000')
+    sshinteract('logging buffered 5000')
+    sshinteract('exit')
+    sshinteract('show logging')
