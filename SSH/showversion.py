@@ -8,13 +8,6 @@ user = 'pyclass'
 password = '88newclass'
 port = 22
 
-def sshinteract(cmd):
-    remote_conn.send(cmd)
-    outp = remote_conn.recv(65535)
-    while remote_conn.recv_ready():
-        outp += remote_conn.recv(65535)
-    print outp
-
 if __name__ == '__main__':
     remote_conn_pre = paramiko.SSHClient()
     #remote_conn_pre.load_system_host_keys()
@@ -24,7 +17,14 @@ if __name__ == '__main__':
     remote_conn.settimeout(12.0)
     outp = remote_conn.recv(65535)
     print outp
-    time.sleep(5)
-    sshinteract('terminal length 0\n')
-    time.sleep(5)
+    time.sleep(3)
+    remote_conn.send('terminal length 0\n')
+    time.sleep(3)
+    outp = remote_conn.recv(65535)
+    print outp
     sshinteract('show version\n')
+    time.sleep(3)
+    while remote_conn.recv_ready():
+        outp += remote_conn.recv(65535)
+        time.sleep(3)
+    print outp
