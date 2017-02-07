@@ -10,7 +10,7 @@ def main():
 
     ssh_conn = pexpect.spawn('ssh -l {} {} -p {}'.format(user, ip, port))
     ssh_conn.logfile = sys.stdout
-    ssh_conn.timeout = 3
+    ssh_conn.timeout = 6
     try:
         ssh_conn.expect('ssword:')
         ssh_conn.sendline(password)
