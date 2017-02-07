@@ -33,7 +33,7 @@ if __name__ == '__main__':
     remote_conn.send('exit\n')
     time.sleep(3)
     outp = remote_conn.recv(65535)
-    print out
+    print outp
     remote_conn.send('show logging\n')
     time.sleep(3)
     while remote_conn.recv_ready():
