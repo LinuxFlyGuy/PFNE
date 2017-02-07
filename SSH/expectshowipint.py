@@ -19,12 +19,12 @@ def main():
         ssh_conn.sendline(password)
 
         #ssh_conn.expect('[root@CubroEX32plus ~]$')
-        ssh_conn.expect('#')
+        ssh_conn.expect('pynet-rtr2#')
 
         #ssh_conn.sendline('ls')
         #ssh_conn.expect('[root@CubroEX32plus ~]$')
         ssh_conn.sendline('terminal length 0')
-        ssh_conn.expect('#')
+        ssh_conn.expect('pynet-rtr2#')
 
         #ssh_conn.sendline('ovs-ofctl show br0')
         #ssh_conn.expect('zzz')
