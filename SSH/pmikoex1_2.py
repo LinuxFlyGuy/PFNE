@@ -9,7 +9,7 @@ password = '88newclass'
 port = 22
 
 def sshinteract(cmd):
-    remote_conn.send(cmd + '\n')
+    remote_conn.send(cmd)
     outp = remote_conn.recv(65535)
     while remote_conn.recv_ready():
         outp += remote_conn.recv(65535)
@@ -24,12 +24,12 @@ if __name__ == '__main__':
     remote_conn.settimeout(12.0)
     outp = remote_conn.recv(65535)
     print outp
-    sshinteract('show version')
+    sshinteract('show version\n')
     time.sleep(5)
-    sshinteract('configure terminal')
+    sshinteract('configure terminal\n')
     time.sleep(5)
-    sshinteract('logging buffered 9000')
+    sshinteract('logging buffered 9000\n')
     time.sleep(5)
-    sshinteract('exit')
+    sshinteract('exit\n')
     time.sleep(5)
-    sshinteract('show logging')
+    sshinteract('show logging\n')
