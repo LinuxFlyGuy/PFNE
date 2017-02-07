@@ -11,8 +11,9 @@ port = 22
 def sshinteract(cmd):
     remote_conn.send(cmd + '\n')
     time.sleep(5)
-    outp = remote_conn.recv(5000)
-    print outp
+    while remote_conn.recv_ready() == True:
+        outp = remote_conn.recv(5000)
+        print outp
 
 if __name__ == '__main__':
     remote_conn_pre = paramiko.SSHClient()
@@ -24,7 +25,6 @@ if __name__ == '__main__':
     outp = remote_conn.recv(5000)
     print outp
     sshinteract('show version')
-    sshinteract('')
     sshinteract('configure terminal')
     sshinteract('logging buffered 9000')
     sshinteract('exit')
