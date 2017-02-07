@@ -11,23 +11,24 @@ def main():
     ssh_conn = pexpect.spawn('ssh -l {} {} -p {}'.format(user, ip, port))
     ssh_conn.logfile = sys.stdout
     ssh_conn.timeout = 6
+    pattern = re.compile(r'^pyn\S+[#]', re.MULTILINE)
     try:
         ssh_conn.expect('ssword:')
         ssh_conn.sendline(password)
 
-        ssh_conn.expect('\S+net+#')
+        ssh_conn.expect(pattern)
 
         ssh_conn.sendline('terminal length 0')
-        ssh_conn.expect('\S+net+#')
+        ssh_conn.expect(pattern)
 
         ssh_conn.sendline('configure terminal')
-        ssh_conn.expect('\S+net+#')
+        ssh_conn.expect(pattern)
 
         ssh_conn.sendline('logging buffered 5000')
-        ssh_conn.expect('\S+net+#')
+        ssh_conn.expect(pattern)
 
         ssh_conn.sendline('exit')
-        ssh_conn.expect('\S+net+#')
+        ssh_conn.expect(pattern)
 
         ssh_conn.sendline('show run')
         ssh_conn.expect('zzz')
