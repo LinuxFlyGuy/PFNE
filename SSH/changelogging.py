@@ -18,7 +18,7 @@ if __name__ == '__main__':
     outp = remote_conn.recv(65535)
     print outp
     time.sleep(3)
-    remote_conn.send('enable\n')
+    remote_conn.send('terminal length 0\n')
     time.sleep(3)
     outp = remote_conn.recv(65535)
     print outp
