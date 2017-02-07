@@ -10,8 +10,8 @@ port = 22
 
 def sshinteract(cmd):
     remote_conn.send(cmd)
-    outp = ''
-    while remote_conn.recv_ready() == True:
+    outp = remote_conn.recv(65535)
+    while remote_conn.recv_ready():
         outp += remote_conn.recv(65535)
     print outp
 
