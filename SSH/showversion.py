@@ -22,7 +22,7 @@ if __name__ == '__main__':
     time.sleep(3)
     outp = remote_conn.recv(65535)
     print outp
-    sremote_conn.send('show version\n')
+    remote_conn.send('show version\n')
     time.sleep(3)
     while remote_conn.recv_ready():
         outp += remote_conn.recv(65535)
