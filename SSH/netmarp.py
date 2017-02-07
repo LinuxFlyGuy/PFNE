@@ -27,12 +27,18 @@ def main():
     pynet_rtr2 = netmiko.ConnectHandler(**rtr2)
     juniper = netmiko.ConnectHandler(**juni)
 
-    pynet_rtr1.find_prompt()
-    pynet_rtr1.send_command('show arp')
-    pynet_rtr2.find_prompt()
-    pynet_rtr2.send_command('show arp')
-    juniper.find_prompt()
-    juniper.send_command('show arp')
-    
+    x = pynet_rtr1.find_prompt()
+    print x
+    x = pynet_rtr1.send_command('show arp')
+    print x
+    x = pynet_rtr2.find_prompt()
+    print x
+    x = pynet_rtr2.send_command('show arp')
+    print x
+    x = juniper.find_prompt()
+    print x
+    x = juniper.send_command('show arp')
+    print x
+
 if __name__ == '__main__':
     main()
