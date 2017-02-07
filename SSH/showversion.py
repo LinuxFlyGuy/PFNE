@@ -10,7 +10,7 @@ port = 22
 
 def sshinteract(cmd):
     remote_conn.send(cmd)
-    outp = remote_conn.recv(65535)
+    outp = ''
     while remote_conn.recv_ready():
         outp += remote_conn.recv(65535)
     print outp
@@ -24,12 +24,7 @@ if __name__ == '__main__':
     remote_conn.settimeout(12.0)
     outp = remote_conn.recv(65535)
     print outp
+    time.sleep(5)
+    sshinteract('terminal length 0\n')
+    time.sleep(5)
     sshinteract('show version\n')
-    time.sleep(5)
-    sshinteract('configure terminal\n')
-    time.sleep(5)
-    sshinteract('logging buffered 9000\n')
-    time.sleep(5)
-    sshinteract('exit\n')
-    time.sleep(5)
-    sshinteract('show logging\n')
