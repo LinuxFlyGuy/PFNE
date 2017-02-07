@@ -15,19 +15,19 @@ def main():
         ssh_conn.expect('ssword:')
         ssh_conn.sendline(password)
 
-        ssh_conn.expect('pynet-rtr2#')
+        ssh_conn.expect('.net+#')
 
         ssh_conn.sendline('terminal length 0')
-        ssh_conn.expect('pynet-rtr2#')
+        ssh_conn.expect('.net+#')
 
         ssh_conn.sendline('configure terminal')
-        ssh_conn.expect('pynet-rtr2(config)#')
+        ssh_conn.expect('.net+#')
 
         ssh_conn.sendline('logging buffered 5000')
-        ssh_conn.expect('pynet-rtr2(config)#')
+        ssh_conn.expect('.net+#')
 
         ssh_conn.sendline('exit')
-        ssh_conn.expect('pynet-rtr2#')
+        ssh_conn.expect('.net+#')
 
         ssh_conn.sendline('show run')
         ssh_conn.expect('zzz')
