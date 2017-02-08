@@ -1,5 +1,3 @@
-terminal length 0
-configure terminal
 logging buffered 5000
 no logging console
 exit
