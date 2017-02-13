@@ -1,0 +1,12 @@
+---
+- hosts: local
+  tasks:
+    - name: Generate Configuration File
+      template: src=/home/dburke/PFNE/Ansible/switch.j2
+                  dest=/home/dburke/ANSIBLE/CFGS/{{item.hostname}}.txt
+      with_items:
+        - {hostname: access_switch1, ip_addr: 192.168.0.100, default_gateway: 192.168.0.1, access_vlan: 1, snmp_community: galileo, secret: galileo }
+        - {hostname: access_switch2, ip_addr: 192.168.1.100, default_gateway: 192.168.1.1, access_vlan: 1, snmp_community: galileo, secret: galileo }
+        - {hostname: access_switch3, ip_addr: 192.168.2.100, default_gateway: 192.168.2.1, access_vlan: 1, snmp_community: galileo, secret: galileo }
+        - {hostname: access_switch4, ip_addr: 192.168.3.100, default_gateway: 192.168.3.1, access_vlan: 1, snmp_community: galileo, secret: galileo }
+        - {hostname: access_switch5, ip_addr: 192.168.4.100, default_gateway: 192.168.4.1, access_vlan: 1, snmp_community: galileo, secret: galileo }
