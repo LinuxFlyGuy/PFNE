@@ -23,8 +23,16 @@
     port={{ eapi_port }}
     transport=https
 
-- name:
-  eos_switchport: name=Ethernet4 description="*** IN USE ***" mode=access access_vlan=300
+- name: Set Ethernet4 description
+  eos_interface: name=Ethernet4 description="*** IN USE ***"
+    username={{ eapi_username }}
+    password={{ eapi_password }}
+    host={{ eapi_hostname }}
+    port={{ eapi_port }}
+    transport=https
+
+- name: Configure Ethernet4 to access port on VLAN 300
+  eos_switchport: name=Ethernet4 mode=access access_vlan=300
     username={{ eapi_username }}
     password={{ eapi_password }}
     host={{ eapi_hostname }}
