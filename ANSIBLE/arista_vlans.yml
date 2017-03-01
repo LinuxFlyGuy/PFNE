@@ -1,0 +1,6 @@
+---
+- name:
+  hosts: arista
+
+  roles:
+    - eos
