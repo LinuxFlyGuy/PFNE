@@ -1,35 +1,35 @@
 ---
-- name: Create GREEN VLAN
-  eos_vlan: name=GREEN vlanid=100
-    username={{ eapi_username }}
-    password={{ eapi_password }}
-    host={{ eapi_hostname }}
-    port={{ eapi_port }}
-    transport=https
+#- name: Create GREEN VLAN
+#  eos_vlan: name=GREEN vlanid=100
+#    username={{ eapi_username }}
+#    password={{ eapi_password }}
+#    host={{ eapi_hostname }}
+#    port={{ eapi_port }}
+#    transport=https
 
-- name: Create ORANGE VLAN
-  eos_vlan: name=ORANGE vlanid=200
-    username={{ eapi_username }}
-    password={{ eapi_password }}
-    host={{ eapi_hostname }}
-    port={{ eapi_port }}
-    transport=https
+#- name: Create ORANGE VLAN
+#  eos_vlan: name=ORANGE vlanid=200
+#    username={{ eapi_username }}
+#    password={{ eapi_password }}
+#    host={{ eapi_hostname }}
+#    port={{ eapi_port }}
+#    transport=https
 
-- name: Create CYAN VLAN
-  eos_vlan: name=CYAN vlanid=300
-    username={{ eapi_username }}
-    password={{ eapi_password }}
-    host={{ eapi_hostname }}
-    port={{ eapi_port }}
-    transport=https
+#- name: Create CYAN VLAN
+#  eos_vlan: name=CYAN vlanid=300
+#    username={{ eapi_username }}
+#    password={{ eapi_password }}
+#    host={{ eapi_hostname }}
+#    port={{ eapi_port }}
+#    transport=https
 
-- name: Set Ethernet4 description
-  eos_interface: name=Ethernet4 description="*** IN USE ***"
-    username={{ eapi_username }}
-    password={{ eapi_password }}
-    host={{ eapi_hostname }}
-    port={{ eapi_port }}
-    transport=https
+#- name: Set Ethernet4 description
+#  eos_interface: name=Ethernet4 description="*** IN USE ***"
+#    username={{ eapi_username }}
+#    password={{ eapi_password }}
+#    host={{ eapi_hostname }}
+#    port={{ eapi_port }}
+#    transport=https
 
 #- name: Configure Ethernet4 to access port on VLAN 300
 #  eos_switchport: name=Ethernet4 mode=access access_vlan=300
@@ -39,8 +39,48 @@
 #    port={{ eapi_port }}
 #    transport=https
 
-- name: Configure Ethernet4 to trunk port for VLANs 100, 200, 300
-  eos_switchport: name=Ethernet4 mode=trunk trunk_native_vlan=1 trunk_allowed_vlans=100,200,300
+#- name: Configure Ethernet4 to trunk port for VLANs 100, 200, 300
+#  eos_switchport: name=Ethernet4 mode=trunk trunk_native_vlan=1 trunk_allowed_vlans=100,200,300
+#    username={{ eapi_username }}
+#    password={{ eapi_password }}
+#    host={{ eapi_hostname }}
+#    port={{ eapi_port }}
+#    transport=https
+
+- name: Delete GREEN VLAN
+  eos_vlan: name=GREEN vlanid=100 state=absent
+    username={{ eapi_username }}
+    password={{ eapi_password }}
+    host={{ eapi_hostname }}
+    port={{ eapi_port }}
+    transport=https
+
+- name: Delete ORANGE VLAN
+  eos_vlan: name=ORANGE vlanid=200 state=absent
+    username={{ eapi_username }}
+    password={{ eapi_password }}
+    host={{ eapi_hostname }}
+    port={{ eapi_port }}
+    transport=https
+
+- name: Delete CYAN VLAN
+  eos_vlan: name=CYAN vlanid=300 state=absent
+    username={{ eapi_username }}
+    password={{ eapi_password }}
+    host={{ eapi_hostname }}
+    port={{ eapi_port }}
+    transport=https
+
+- name: Set Ethernet4 description to default
+  eos_interface: name=Ethernet4 description=""
+    username={{ eapi_username }}
+    password={{ eapi_password }}
+    host={{ eapi_hostname }}
+    port={{ eapi_port }}
+    transport=https
+
+- name: Configure Ethernet4 to default
+  eos_switchport: name=Ethernet4 mode=access access_vlan=1 trunk_allowed_vlans=all
     username={{ eapi_username }}
     password={{ eapi_password }}
     host={{ eapi_hostname }}
