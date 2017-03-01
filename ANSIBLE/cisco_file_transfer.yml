@@ -1,0 +1,6 @@
+---
+- name: Cisco File Transfer
+  hosts: cisco
+
+  roles:
+    - cisco
