@@ -47,29 +47,17 @@
 #    port={{ eapi_port }}
 #    transport=https
 
-- name: Delete GREEN VLAN
-  eos_vlan: name=GREEN vlanid=100 state=absent
+- name: Delete VLANs
+  eos_vlan: name={{ item.name }} vlanid={{ item.vlanid }} state=absent
     username={{ eapi_username }}
     password={{ eapi_password }}
     host={{ eapi_hostname }}
     port={{ eapi_port }}
     transport=https
-
-- name: Delete ORANGE VLAN
-  eos_vlan: name=ORANGE vlanid=200 state=absent
-    username={{ eapi_username }}
-    password={{ eapi_password }}
-    host={{ eapi_hostname }}
-    port={{ eapi_port }}
-    transport=https
-
-- name: Delete CYAN VLAN
-  eos_vlan: name=CYAN vlanid=300 state=absent
-    username={{ eapi_username }}
-    password={{ eapi_password }}
-    host={{ eapi_hostname }}
-    port={{ eapi_port }}
-    transport=https
+  with_items:
+    - {name: GREEN, vlanid: 100}
+    - {name: ORANGE, vlanid: 200}
+    - {name: CYAN, vlanid: 300}
 
 - name: Set Ethernet4 description to default
   eos_interface: name=Ethernet4 description=""
