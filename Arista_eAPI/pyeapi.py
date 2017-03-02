@@ -13,3 +13,6 @@ print my_config2
 
 shversion = pynet_sw3.enable("show version")
 pprint(shversion)
+
+write = pynet_sw3.enable("write memory")
+pprint(write)
