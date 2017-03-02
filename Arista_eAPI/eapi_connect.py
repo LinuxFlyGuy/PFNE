@@ -1,11 +1,11 @@
 import jsonrpclib
 from pprint import pprint
 
-ip = '1.1.1.1'
-port = '8243'
+ip = '184.105.247.74'
+port = '443'
 
 username = 'eapi'
-password = '99saturday'
+password = 'ZZteslaX'
 
 switch_url = 'https://{}:{}@{}:{}'.format(username, password, ip, port) #also %s works
 switch_url = switch_url + '/command-api'
