@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
-import jsonrpclib
+import jsonrpclib, ssl
 from pprint import pprint
 
+ssl._create_default_https_context = ssl._create_unverified_context
 ip = '184.105.247.74'
 port = '443'
 
