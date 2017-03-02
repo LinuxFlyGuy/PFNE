@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import pyeapi
 from pprint import pprint
 

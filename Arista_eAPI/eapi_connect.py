@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import jsonrpclib
 from pprint import pprint
 
