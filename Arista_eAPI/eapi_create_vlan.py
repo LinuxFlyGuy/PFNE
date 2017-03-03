@@ -13,9 +13,11 @@ def usage():
 
 if len(sys.argv) <= 3 or len(sys.argv) >=5:
     print len(sys.argv)
+    print sys.argv[1]
     usage()
 elif len(sys.argv) == 4 and sys.argv[1] != '--add': #or sys.argv[1] != '-a':
     print len(sys.argv)
+    print sys.argv[1]
     usage()
 elif len(sys.argv) == 4 and sys.argv[1] != '--remove': #or sys.argv[1] != '-r':
     print len(sys.argv)
