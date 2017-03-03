@@ -26,7 +26,9 @@ elif len(sys.argv) == 4 and sys.argv[1] == '--add': #or sys.argv[1] == '-a':
     print len(sys.argv)
     print sys.argv[1]
     name = sys.argv[2]
+    print name
     vid = sys.argv[3]
+    print vid
     option1 = 'vlan ' + vid
     option2 = 'name ' + name
     cmd = [option1, option2]
