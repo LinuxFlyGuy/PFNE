@@ -15,14 +15,14 @@ if len(sys.argv) <= 3 or len(sys.argv) >=5:
     print len(sys.argv)
     print sys.argv[1:]
     usage()
-elif len(sys.argv) == 4 and str(sys.argv[1]) != '--add': #or sys.argv[1] != '-a':
+if len(sys.argv) == 4 and str(sys.argv[1]) != '--add': #or sys.argv[1] != '-a':
     print len(sys.argv)
     print sys.argv[1:]
     usage()
-elif len(sys.argv) == 4 and str(sys.argv[1]) != '--remove': #or sys.argv[1] != '-r':
+if len(sys.argv) == 4 and str(sys.argv[1]) != '--remove': #or sys.argv[1] != '-r':
     print len(sys.argv)
     usage()
-elif len(sys.argv) == 4 and str(sys.argv[1]) == '--add': #or sys.argv[1] == '-a':
+if len(sys.argv) == 4 and str(sys.argv[1]) == '--add': #or sys.argv[1] == '-a':
     print len(sys.argv)
     print sys.argv[1:]
     name = str(sys.argv[2])
@@ -45,7 +45,7 @@ elif len(sys.argv) == 4 and str(sys.argv[1]) == '--add': #or sys.argv[1] == '-a'
                 print 'eapi_create_vlan encountered a problem'
     except:
         print 'Unable to communicate with switch'
-elif len(sys.argv) == 3 and str(sys.argv[1]) == '--remove': #or sys.argv[1] == '-r':
+if len(sys.argv) == 3 and str(sys.argv[1]) == '--remove': #or sys.argv[1] == '-r':
     print len(sys.argv)
     print str(sys.argv[1])
     vid = str(sys.argv[2])
@@ -66,5 +66,5 @@ elif len(sys.argv) == 3 and str(sys.argv[1]) == '--remove': #or sys.argv[1] == '
                 print 'eapi_create_vlan encountered a problem'
     except:
         print 'Unable to communicate with switch'
-else:
-    print 'eapi_create_vlan encountered a problem'
+#else:
+    #print 'eapi_create_vlan encountered a problem'
