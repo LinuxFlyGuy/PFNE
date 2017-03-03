@@ -34,7 +34,7 @@ elif len(sys.argv) == 4 and str(sys.argv[1]) == '--add' or len(sys.argv) == 4 an
                 print 'eapi_create_vlan encountered a problem'
     except:
         print 'Unable to communicate with switch'
-elif len(sys.argv) == 3 and str(sys.argv[1]) == '--remove' or len(sys.argv) == 3 and str(sys.argv[1]) == '-':
+elif len(sys.argv) == 3 and str(sys.argv[1]) == '--remove' or len(sys.argv) == 3 and str(sys.argv[1]) == '-r':
     vid = str(sys.argv[2])
     option = 'no vlan ' + vid
     cmd = [option]
@@ -44,7 +44,7 @@ elif len(sys.argv) == 3 and str(sys.argv[1]) == '--remove' or len(sys.argv) == 3
         check = pynet_sw3.enable("show vlan")
         unlist = check[0]
         for item in unlist['result']['vlans']:
-            active_vlans.append(item)
+            active_vlans.append(str(item))
             if vid in active_vlans:
                 print 'Removing VLAN %s' % vid
                 pynet_sw3.config(cmd)
