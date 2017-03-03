@@ -26,13 +26,12 @@ elif len(sys.argv) == 4 and str(sys.argv[1]) == '--add' or len(sys.argv) == 4 an
         unlist = check[0]
         for item in unlist['result']['vlans']:
             active_vlans.append(str(item))
-            print active_vlans
-            if vid in active_vlans:
-                print 'VLAN already exists'
-            else:
-                print 'Adding %s VLAN %s' % (name, vid)
-                pynet_sw3.config(cmd)
-                #pynet_sw3.enable("write memory")
+        if vid in active_vlans:
+            print 'VLAN already exists'
+        else:
+            print 'Adding %s VLAN %s' % (name, vid)
+            pynet_sw3.config(cmd)
+            #pynet_sw3.enable("write memory")
     except:
         print 'Unable to communicate with switch'
 elif len(sys.argv) == 3 and str(sys.argv[1]) == '--remove' or len(sys.argv) == 3 and str(sys.argv[1]) == '-r':
@@ -46,12 +45,12 @@ elif len(sys.argv) == 3 and str(sys.argv[1]) == '--remove' or len(sys.argv) == 3
         unlist = check[0]
         for item in unlist['result']['vlans']:
             active_vlans.append(str(item))
-            if vid in active_vlans:
-                print 'Removing VLAN %s' % vid
-                pynet_sw3.config(cmd)
-                #pynet_sw3.enable("write memory")
-            else:
-                print 'VLAN does not exist'
+        if vid in active_vlans:
+            print 'Removing VLAN %s' % vid
+            pynet_sw3.config(cmd)
+            #pynet_sw3.enable("write memory")
+        else:
+            print 'VLAN does not exist'
     except:
         print 'Unable to communicate with switch'
 else:
