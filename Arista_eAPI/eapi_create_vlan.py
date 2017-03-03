@@ -12,13 +12,17 @@ def usage():
         '''
 
 if len(sys.argv) <= 3 or len(sys.argv) >=5:
-    print len(argv)
+    print len(sys.argv)
     usage()
 elif len(sys.argv) == 4 and sys.argv[1] != '--add': #or sys.argv[1] != '-a':
+    print len(sys.argv)
     usage()
 elif len(sys.argv) == 4 and sys.argv[1] != '--remove': #or sys.argv[1] != '-r':
+    print len(sys.argv)
     usage()
 elif len(sys.argv) == 4 and sys.argv[1] == '--add': #or sys.argv[1] == '-a':
+    print len(sys.argv)
+    print sys.argv[1]
     name = sys.argv[2]
     vid = sys.argv[3]
     option1 = 'vlan ' + vid
@@ -40,6 +44,8 @@ elif len(sys.argv) == 4 and sys.argv[1] == '--add': #or sys.argv[1] == '-a':
     except:
         print 'Unable to communicate with switch'
 elif len(sys.argv) == 3 and sys.argv[1] == '--remove': #or sys.argv[1] == '-r':
+    print len(sys.argv)
+    print sys.argv[1]
     vid = sys.argv[2]
     option = 'no vlan ' + vid
     cmd = [option]
