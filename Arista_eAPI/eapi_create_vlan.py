@@ -12,15 +12,6 @@ def usage():
         '''
 
 if len(sys.argv) <= 3 or len(sys.argv) >=5:
-    print len(sys.argv)
-    print sys.argv[1:]
-    usage()
-if len(sys.argv) == 4 and str(sys.argv[1]) != '--add': #or sys.argv[1] != '-a':
-    print len(sys.argv)
-    print sys.argv[1:]
-    usage()
-if len(sys.argv) == 4 and str(sys.argv[1]) != '--remove': #or sys.argv[1] != '-r':
-    print len(sys.argv)
     usage()
 if len(sys.argv) == 4 and str(sys.argv[1]) == '--add': #or sys.argv[1] == '-a':
     print len(sys.argv)
@@ -45,6 +36,8 @@ if len(sys.argv) == 4 and str(sys.argv[1]) == '--add': #or sys.argv[1] == '-a':
                 print 'eapi_create_vlan encountered a problem'
     except:
         print 'Unable to communicate with switch'
+else:
+    usage()
 if len(sys.argv) == 3 and str(sys.argv[1]) == '--remove': #or sys.argv[1] == '-r':
     print len(sys.argv)
     print str(sys.argv[1])
@@ -56,9 +49,9 @@ if len(sys.argv) == 3 and str(sys.argv[1]) == '--remove': #or sys.argv[1] == '-r
         check = pynet_sw3.enable("show vlan")
         unlist = check[0]
         for item in unlist['result']['vlans']:
-            if vid in item:
+            if vid not in item:
                 print 'VLAN does not exist'
-            elif vid not in item:
+            elif vid in item:
                 print 'Removing VLAN %s' % vid
                 pynet_sw3.config(cmd)
                 #pynet_sw3.enable("write memory")
@@ -66,5 +59,5 @@ if len(sys.argv) == 3 and str(sys.argv[1]) == '--remove': #or sys.argv[1] == '-r
                 print 'eapi_create_vlan encountered a problem'
     except:
         print 'Unable to communicate with switch'
-#else:
-    #print 'eapi_create_vlan encountered a problem'
+else:
+    usage()
