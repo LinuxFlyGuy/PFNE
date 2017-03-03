@@ -6,4 +6,6 @@ from pprint import pprint
 pynet_sw3 = pyeapi.connect_to("pynet-sw3")
 
 shinterfaces = pynet_sw3.enable("show interfaces")
-pprint(shinterfaces)
+
+for interface in shinterfaces:
+    pprint(interface)
