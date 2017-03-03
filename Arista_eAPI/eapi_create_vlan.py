@@ -11,11 +11,9 @@ def usage():
                 -r, --remove <vlan name> <vlan id> Remove VLAN with specified name and ID if it exists
         '''
 
-if len(sys.argv) <= 3 or len(sys.argv) >=5:
+if len(sys.argv) <= 2 or len(sys.argv) >=5:
     usage()
-if len(sys.argv) == 4 and str(sys.argv[1]) == '--add': #or sys.argv[1] == '-a':
-    print len(sys.argv)
-    print sys.argv[1:]
+elif len(sys.argv) == 4 and str(sys.argv[1]) == '--add': #or sys.argv[1] == '-a':
     name = str(sys.argv[2])
     vid = str(sys.argv[3])
     option1 = 'vlan ' + vid
@@ -36,11 +34,7 @@ if len(sys.argv) == 4 and str(sys.argv[1]) == '--add': #or sys.argv[1] == '-a':
                 print 'eapi_create_vlan encountered a problem'
     except:
         print 'Unable to communicate with switch'
-else:
-    usage()
-if len(sys.argv) == 3 and str(sys.argv[1]) == '--remove': #or sys.argv[1] == '-r':
-    print len(sys.argv)
-    print str(sys.argv[1])
+elif len(sys.argv) == 3 and str(sys.argv[1]) == '--remove': #or sys.argv[1] == '-r':
     vid = str(sys.argv[2])
     option = 'no vlan ' + vid
     cmd = [option]
