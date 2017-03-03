@@ -47,14 +47,14 @@ elif len(sys.argv) == 3 and sys.argv[1] == '--remove' or sys.argv[1] == '-r':
         check = pynet_sw3.enable("show vlan")
         unlist = check[0]
         for item in unlist['result']['vlans']:
-        if vid in item:
-            print 'VLAN does not exist'
-        elif vid not in item:
-            print 'Removing VLAN %s' % vid
-            pynet_sw3.config(cmd)
-            #pynet_sw3.enable("write memory")
-        else:
-            print 'eapi_create_vlan encountered a problem'
+            if vid in item:
+                print 'VLAN does not exist'
+            elif vid not in item:
+                print 'Removing VLAN %s' % vid
+                pynet_sw3.config(cmd)
+                #pynet_sw3.enable("write memory")
+            else:
+                print 'eapi_create_vlan encountered a problem'
     except:
         print 'Unable to communicate with switch'
 else:
