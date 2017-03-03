@@ -26,6 +26,7 @@ elif len(sys.argv) == 4 and str(sys.argv[1]) == '--add' or len(sys.argv) == 4 an
         unlist = check[0]
         for item in unlist['result']['vlans']:
             active_vlans.append(str(item))
+            print active_vlans
             if vid in active_vlans:
                 print 'VLAN already exists'
             else:
