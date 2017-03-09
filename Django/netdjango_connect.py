@@ -20,7 +20,8 @@ def main():
 
         print
         print '#' * 80
-        print remote_conn.send("show version")
+
+        print remote_conn.send_command("show version")
         print '#' * 80
 
     execute_time = datetime.now() - start_time
