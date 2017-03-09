@@ -26,6 +26,6 @@ def main():
 
     execute_time = datetime.now() - start_time
     print execute_time
-    cp
+    
 if __name__ == '__main__':
     main()
