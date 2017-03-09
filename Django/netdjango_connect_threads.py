@@ -25,7 +25,7 @@ def main():
     execute_time = datetime.now() - start_time
     print "Time to Execute: ", execute_time
 
-def show_version():
+def show_version(device):
     creds = device.credentials
     remote_conn = ConnectHandler(device_type=device.device_type,
                                 ip=device.ip_address,
