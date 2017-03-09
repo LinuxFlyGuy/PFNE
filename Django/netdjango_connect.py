@@ -14,7 +14,7 @@ def main():
     for device in devices:
         print device
         secret = ''
-        print device_type, port, ip, username, password
+        print device.device_type, device.port, device.ip_address, creds.username, creds.password
         remote_conn = ConnectHandler(device_type=device.device_type, ip=device.ip_address, username=creds.username, password=creds.password, port=device.port, secret=secret)
 
         print
