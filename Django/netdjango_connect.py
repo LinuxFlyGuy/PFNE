@@ -10,7 +10,7 @@ def main():
     django.setup()
 
     start_time = datetime.now()
-    devices = NetworkDevices.objects.all()
+    devices = NetworkDevice.objects.all()
     for device in devices:
         print device
         secret = ''
@@ -24,6 +24,6 @@ def main():
 
     execute_time = datetime.now() - start_time
     print execute_time
-    
+    cp
 if __name__ == '__main__':
     main()
